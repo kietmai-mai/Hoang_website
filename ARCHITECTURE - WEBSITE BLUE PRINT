@@ -1,0 +1,430 @@
+//// WEBSITE BLUE PRINT //// ------ JAN 14 2026 ----------
+Global structure
+Top navigation (sticky):
+
+Home
+
+Loan Programs
+
+Calculators
+
+Knowledge / Blog
+
+Reviews
+
+About / Team
+
+Apply Now
+
+Global elements:
+
+“Call / Text now” and “Get Pre-Approved” buttons always visible.
+
+NMLS, equal housing, and licensing strip in footer (PA-focused).
+
+Home – 1-page landing
+Hero section
+
+Left:
+
+Headline: “Your PA Mortgage Experts – Team MAI”
+
+Sub: “Local, data-driven mortgage strategy for Pennsylvania homebuyers, investors, and self-employed professionals.”
+
+Primary CTA: “Start My Approval”
+
+Secondary CTA: “See Loan Programs”
+
+Right:
+
+Quick quote widget:
+
+Purpose (Purchase / Refinance / Investment)
+
+Estimated price / loan amount
+
+Credit score range
+
+“See my options” → Apply / lead form.
+
+Segment cards (like Movement loans tiles)
+​
+
+3 main cards:
+
+Mua nhà (Purchase)
+
+Refinance
+
+Self‑employed / No income-doc
+
+Each card shows:
+
+1–2 bullets of who it’s for.
+
+“Explore options” → anchors to Loan Programs page/section.
+
+Why Team MAI (trust block)
+
+3–4 columns:
+
+“Local PA market expertise”
+
+“Fast, transparent approvals”
+
+“Creative solutions for self-employed & investors”
+
+“Backed by Absolute Mortgage & Lending”
+
+Include logo lockup: PA Mortgage Experts – Team MAI x Absolute Mortgage & Lending.
+​
+
+Featured calculators preview
+
+Three tiles with icons:
+
+Mortgage Payment Calculator
+
+Affordability Calculator
+
+Refinance Savings Calculator
+
+Each has “Try calculator” → Calculators page.
+
+Past closed deals / success strip
+
+Horizontal slider/grid:
+
+“$480k Rowhouse – South Philly – First-time buyer – 5% down – Clear to close in 18 days”
+
+“Cash-out refi – $150k – West Philly duplex – DSCR rental”
+
+CTA: “View more success stories” → Reviews / Past Deals section.
+
+Mini review/testimonial area
+
+2–3 short quotes emphasizing:
+
+On-time closings.
+
+Communication.
+
+Creative structures for tough files.
+​
+
+Loan Programs
+Design like Movement’s loan overview: grid of cards by group, each linking to a dedicated SEO page for that program.
+​
+
+Top intro
+
+Brief explanation of:
+
+Purchase vs Refinance vs Self-employed / No-doc.
+
+Guidance CTA: “Not sure what fits? Schedule a 10‑minute strategy call.”
+
+Group 1: Mua nhà (Purchase)
+
+Cards:
+
+Conventional
+
+Who it’s for, minimum down, key benefits.
+
+Link: /loan-programs/conventional-mortgage
+
+FHA
+
+Lower down, flexible credit, ideal for many first-time buyers.
+​
+
+Link: /loan-programs/fha-loan
+
+VA (if available)
+
+0% down for eligible veterans, no monthly mortgage insurance.
+​
+
+Link: /loan-programs/va-loan
+
+First-time homebuyer guidance
+
+Education, down payment assistance, hand-holding through process.
+
+Link: /loan-programs/first-time-homebuyer-pa
+
+Group 2: Refinance
+
+Rate & Term Refi
+
+Lower payment, shorter term, remove PMI.
+
+Link: /loan-programs/rate-term-refinance
+
+Cash-out Refi
+
+Tap equity for renovations, debt consolidation, investing.
+
+Link: /loan-programs/cash-out-refinance
+
+Group 3: Không chứng minh thu nhập / Self-employed
+
+Bank statement loans
+
+Qualify using 12–24 months business/personal bank statements.
+
+Link: /loan-programs/bank-statement-mortgage
+
+P&L / VOE only
+
+Profit & Loss and/or Verification of Employment driven structures.
+
+Link: /loan-programs/p-and-l-voe-mortgage
+
+DSCR loans
+
+For investors; qualify based on property’s rental income vs payment (DSCR).
+
+Link: /loan-programs/dscr-investor-loan
+
+Per‑program SEO subpage layout (all similar)
+
+Hero: Program name + “See if this is right for you”.
+
+Sections:
+
+“Who this program is for”
+
+“Key benefits”
+
+“Basic requirements & documents”
+
+“Example scenario” (numbers)
+
+FAQ
+
+Inline CTA: “Check my eligibility” (short form).
+
+Calculators
+Single Calculators hub page with tabs or cards for each tool, similar to bank affordability tools.
+​
+
+Mortgage Payment Calculator
+
+Inputs:
+
+Home price or loan amount
+
+Down payment
+
+Interest rate
+
+Term (years)
+
+Taxes, insurance, HOA (optional)
+
+Outputs:
+
+Monthly principal & interest
+
+Estimated total monthly payment
+
+Amortization summary.
+
+Affordability Calculator
+
+Inputs (like U.S. Bank / PNC tools):
+​
+
+Annual income
+
+Monthly debt payments
+
+Down payment amount
+
+State = Pennsylvania
+
+Desired DTI / comfort level slider (Conservative / Moderate / Aggressive)
+
+Outputs:
+
+“Estimated max home price”
+
+Estimated monthly mortgage
+
+A range: Conservative / Stretch / Aggressive.
+
+Refinance Calculator
+
+Inputs:
+
+Current loan balance, rate, remaining term, current monthly payment.
+
+New rate & term options.
+
+Estimated closing costs.
+
+Outputs:
+
+New monthly payment vs current.
+
+Monthly savings.
+
+Breakeven in months.
+
+CTA under results:
+
+“Discuss my numbers with Team MAI” → Apply/meeting.
+
+Knowledge / Blog
+List layout with filters by topic:
+
+First-time buyer guides (English & Vietnamese mixed as desired).
+
+PA-specific rules (taxes, grants, credits).
+
+Self-employed / DSCR education.
+
+Article card:
+
+Title, short excerpt, category tag, read time.
+
+Each post with sidebar CTA:
+
+“Have questions about this topic? Book a 15-minute call.”
+
+Reviews & Past Deals
+Reviews
+
+Pull Google / Zillow / internal testimonials.
+
+Layout:
+
+2–3 featured long-form reviews with profile photo / initials.
+
+Grid of shorter quotes emphasizing speed, communication, and solution design.
+​
+
+Star rating summary if available.
+
+Past Closed Deals
+
+Filter bar:
+
+Purchase / Refi / Investor / Self-employed.
+
+Card layout:
+
+Property type & location.
+
+Loan type (Conventional, FHA, DSCR, etc.).
+
+Key highlight (e.g., “Self-employed, bank statement only – closed in 21 days”).
+
+CTA: “See what we can do with your scenario.”
+
+About / Team
+About PA Mortgage Experts – Team MAI
+
+Short mission statement:
+
+Local PA focus, bilingual advantage if applicable, tech & data-driven underwriting preparation.
+
+Include connection to Absolute Mortgage & Lending for credibility, using similar language about integrity and matching unique needs.
+​
+
+Team MAI member profiles
+
+Layout: grid or vertical cards, clicking opens full bio.
+
+Mai Hoang – Loan Officer
+
+Tagline: “Ex-Columbia alumni and Washington Scholar; 7+ years in finance, insurance, mortgage advising.”
+
+Focus: complex scenarios, first-time buyers, self-employed.
+
+Michael Mai – Business / IT / Commercial Consultant
+
+“Temple graduate with 12+ years in business, IT, and commercial consulting.”
+
+Focus: process optimization, tech stack, investor clients.
+
+Chau Truong – Enterprise Consultant & Loan Assistant
+
+“Specializes in documentation workflows and client support.”
+
+Khai Nguyen – AML CEO
+
+Short leadership bio, emphasizing experience and client-first culture.
+​
+
+Vu Do – Executive Director
+
+High-level strategy and operations.
+
+Ashley Duong – Sales Manager
+
+Oversees referral relationships and growth.
+
+Tina Truong – Senior Loan Processor
+
+Focus on clean files and on-time closings.
+
+Each bio card:
+
+Photo
+
+Role
+
+Short 2–3 sentence bio
+
+Direct contact methods where appropriate (email / Calendly).
+
+Apply page
+Top section
+
+Headline: “Apply with PA Mortgage Experts – Team MAI”
+
+Sub: “Secure online application powered by [Absolute Mortgage & Lending] platform.”
+
+Flow
+
+Step tiles (mirroring “Loan Process Overview” style):
+​
+
+Step 1: Quick questions (goal, timeline, basic info).
+
+Step 2: Full application (external LOS link).
+
+Step 3: Document upload & pre-approval.
+
+Two options:
+
+Option A: “Full application” → link to main online app platform.
+
+Option B: “Quick start (2 minutes)” → short internal lead form:
+
+Name, phone, email
+
+Purchase / Refi / Investment
+
+Budget / loan amount
+
+Preferred contact time.
+
+Style / UX notes
+Visual direction:
+
+Roman royal purple as primary, with gold/cream accent for luxury feel (consistent with your branding preference).
+
+Clean, Movement-style card layouts for programs and calculators.
+​
+
+UX:
+
+Anchor links from Home to each section.
+
+Clear CTAs at bottom of every page/section: “Schedule a Call”, “Start My Approval”.
+
+Mobile-first design; calculators and program cards stack cleanly.
