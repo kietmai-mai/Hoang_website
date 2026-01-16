@@ -28,20 +28,33 @@ class TeamMAIWebsite {
         this.loadLanguagePreference();
     }
 
-    updateLanguage() {
-        document.querySelectorAll('[data-lang]').forEach(element => {
-            const key = element.getAttribute('data-lang');
-            if (this.translations[this.currentLanguage] && this.translations[this.currentLanguage][key]) {
-                element.textContent = this.translations[this.currentLanguage][key];
-            }
-        });
-        
-        // Update language toggle text
-        const langToggle = document.getElementById('language-toggle');
-        if (langToggle) {
-            langToggle.textContent = this.currentLanguage === 'en' ? 'VI' : 'EN';
+updateLanguage() {
+    document.querySelectorAll('[data-lang]').forEach(element => {
+        const key = element.getAttribute('data-lang');
+        if (this.translations[this.currentLanguage] && this.translations[this.currentLanguage][key]) {
+            element.textContent = this.translations[this.currentLanguage][key];
         }
+    });
+
+    // Re-init Typed.js after language change
+    const typewriter = document.querySelector('.typewriter');
+    if (typewriter && typeof Typed !== 'undefined') {
+        typewriter.textContent = ''; // clear
+        new Typed('.typewriter', {
+            strings: [this.translations[this.currentLanguage]['hero-headline']],
+            typeSpeed: 50,
+            showCursor: false,
+            loop: false,
+            onComplete: () => typewriter.classList.add('typing-complete')
+        });
     }
+
+    // Update toggle button
+    const langToggle = document.getElementById('language-toggle');
+    if (langToggle) {
+        langToggle.textContent = this.currentLanguage === 'en' ? 'VI' : 'EN';
+    }
+}
 
     translations = {
         en: {
@@ -155,6 +168,7 @@ class TeamMAIWebsite {
                 strings: [element.textContent],
                 typeSpeed: 50,
                 showCursor: false,
+                loop: false,
                 onComplete: () => {
                     element.classList.add('typing-complete');
                 }
