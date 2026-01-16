@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Program Details - Team MAI Mortgages</title>
+    <meta name="description" content="Detailed information about mortgage loan programs including eligibility, benefits, and application process for Team MAI Mortgages.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <style>
+        :root {
+            --royal-purple: #6B46C1;
+            --warm-cream: #F7F3E9;
+            --champagne-gold: #D4AF37;
+            --charcoal: #2D3748;
+            --soft-ivory: #FEFEFE;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--soft-ivory) 0%, var(--warm-cream) 100%);
+            color: var(--charcoal);
+        }
+        
+        .font-display { font-family: 'Playfair Display', serif; }
+        .font-accent { font-family: 'Crimson Text', serif; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--royal-purple) 0%, #8B5CF6 50%, var(--champagne-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--royal-purple) 0%, #8B5CF6 100%);
+        }
+        
+        .program-detail-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(107, 70, 193, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .benefit-item {
+            background: rgba(107, 70, 193, 0.05);
+            border-left: 4px solid var(--royal-purple);
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-item:hover {
+            background: rgba(107, 70, 193, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .animate-on-scroll {
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--royal-purple);
+            z-index: 999;
+            padding: 2rem;
+        }
+        
+        .mobile-menu.active { display: block; }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--charcoal);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 border-b border-purple-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="font-display text-2xl font-bold text-purple-700">Team MAI</a>
+                    <div class="ml-2 text-sm text-gray-600">Mortgages</div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-purple-700 transition-colors">Home</a>
+                    <a href="loan-programs.html" class="text-gray-700 hover:text-purple-700 transition-colors">Loan Programs</a>
+                    <a href="calculators.html" class="text-gray-700 hover:text-purple-700 transition-colors">Calculators</a>
+                    <a href="knowledge.html" class="text-gray-700 hover:text-purple-700 transition-colors">Knowledge</a>
+                    <a href="reviews.html" class="text-gray-700 hover:text-purple-700 transition-colors">Reviews</a>
+                    <a href="about.html" class="text-gray-700 hover:text-purple-700 transition-colors">About</a>
+                    <a href="apply.html" class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Apply</a>
+                    <button id="language-toggle" class="ml-4 px-3 py-1 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors">VI</button>
+                </div>
+                
+                <div class="md:hidden">
+                    <button class="mobile-menu-toggle">
+                        <span class="block w-6 h-0.5 bg-gray-700 mb-1"></span>
+                        <span class="block w-6 h-0.5 bg-gray-700 mb-1"></span>
+                        <span class="block w-6 h-0.5 bg-gray-700"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <div class="flex flex-col space-y-6 mt-16">
+                <a href="index.html" class="text-white text-xl">Home</a>
+                <a href="loan-programs.html" class="text-white text-xl">Loan Programs</a>
+                <a href="calculators.html" class="text-white text-xl">Calculators</a>
+                <a href="knowledge.html" class="text-white text-xl">Knowledge</a>
+                <a href="reviews.html" class="text-white text-xl">Reviews</a>
+                <a href="about.html" class="text-white text-xl">About</a>
+                <a href="apply.html" class="bg-white text-purple-700 px-6 py-3 rounded-lg text-xl font-semibold">Apply</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-purple-50 to-yellow-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h1 id="program-title" class="font-display text-5xl lg:text-6xl font-bold mb-6">
+                    <span class="hero-gradient">Conventional Loans</span>
+                </h1>
+                <p id="program-subtitle" class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                    Flexible financing options with competitive rates and terms for qualified borrowers
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-on-scroll">
+                    <div class="program-detail-card rounded-2xl p-8">
+                        <h3 class="font-display text-2xl font-bold mb-6">Program Overview</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed" id="program-overview">
+                            Conventional loans are mortgage loans that are not insured or guaranteed by the federal government. 
+                            They offer flexibility and competitive rates for borrowers with good credit and stable income.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6 text-center">
+                            <div>
+                                <div class="text-2xl font-bold text-purple-700 mb-1">3%</div>
+                                <div class="text-sm text-gray-600">Minimum Down Payment</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-purple-700 mb-1">620+</div>
+                                <div class="text-sm text-gray-600">Credit Score Required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="animate-on-scroll">
+                    <img id="program-image" src="resources/luxury-home-hero.jpg" alt="Conventional Loan" class="w-full rounded-2xl shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who It's For -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="font-display text-4xl font-bold text-gray-900 mb-4">Who This Program Is For</h2>
+                <p class="text-xl text-gray-600">Ideal candidates for conventional loan programs</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="program-detail-card rounded-2xl p-8 text-center animate-on-scroll">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">Good Credit History</h3>
+                    <p class="text-gray-600">Borrowers with credit scores of 620 or higher who have established credit history and manageable debt levels.</p>
+                </div>
+                
+                <div class="program-detail-card rounded-2xl p-8 text-center animate-on-scroll">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">Stable Income</h3>
+                    <p class="text-gray-600">Applicants with steady employment history and sufficient income to comfortably afford monthly mortgage payments.</p>
+                </div>
+                
+                <div class="program-detail-card rounded-2xl p-8 text-center animate-on-scroll">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">Down Payment Ready</h3>
+                    <p class="text-gray-600">Buyers who can provide a down payment of at least 3% of the purchase price, with options to avoid PMI with 20% down.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Benefits -->
+    <section class="py-20 bg-white/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="font-display text-4xl font-bold text-gray-900 mb-4">Key Benefits</h2>
+                <p class="text-xl text-gray-600">Why choose a conventional loan for your home purchase</p>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="benefit-item p-6 rounded-lg animate-on-scroll">
+                    <h3 class="font-semibold text-lg mb-2">Flexible Loan Terms</h3>
+                    <p class="text-gray-600">Choose from 10, 15, 20, or 30-year fixed-rate terms, or opt for adjustable-rate mortgages (ARMs) for initial savings.</p>
+                </div>
+                
+                <div class="benefit-item p-6 rounded-lg animate-on-scroll">
+                    <h3 class="font-semibold text-lg mb-2">No Mortgage Insurance with 20% Down</h3>
+                    <p class="text-gray-600">Avoid monthly PMI payments by putting down 20% or more, potentially saving hundreds per month compared to other loan types.</p>
+                </div>
+                
+                <div class="benefit-item p-6 rounded-lg animate-on-scroll">
+                    <h3 class="font-semibold text-lg mb-2">Higher Loan Limits</h3>
+                    <p class="text-gray-600">Conventional loans offer higher borrowing limits than FHA loans, making them ideal for more expensive properties.</p>
+                </div>
+                
+                <div class="benefit-item p-6 rounded-lg animate-on-scroll">
+                    <h3 class="font-semibold text-lg mb-2">Competitive Interest Rates</h3>
+                    <p class="text-gray-600">With good credit, conventional loans often offer the most competitive interest rates available in the market.</p>
+                </div>
+                
+                <div class="benefit-item p-6 rounded-lg animate-on-scroll">
+                    <h3 class="font-semibold text-lg mb-2">Flexible Property Types</h3>
+                    <p class="text-gray-600">Finance primary residences, second homes, and investment properties with conventional loan programs.</p>
+                </div>
+                
+                <div class="benefit-item p-6 rounded-lg animate-on-scroll">
+                    <h3 class="font-semibold text-lg mb-2">Faster Processing</h3>
+                    <p class="text-gray-600">Without government involvement, conventional loans often process faster than FHA or VA loans.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline & Process -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="font-display text-4xl font-bold text-gray-900 mb-4">What to Expect</h2>
+                <p class="text-xl text-gray-600">Your journey from application to closing</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="space-y-8 animate-on-scroll">
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mr-6 flex-shrink-0">
+                            <span class="text-white font-bold">1</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Pre-Application Consultation</h3>
+                            <p class="text-gray-600">Discuss your financial situation, goals, and loan options with our team. We'll help determine if a conventional loan is right for you.</p>
+                            <p class="text-sm text-gray-500 mt-2"><strong>Timeline:</strong> 30-45 minutes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mr-6 flex-shrink-0">
+                            <span class="text-white font-bold">2</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Application & Documentation</h3>
+                            <p class="text-gray-600">Complete your loan application and provide required documents including income verification, bank statements, and credit information.</p>
+                            <p class="text-sm text-gray-500 mt-2"><strong>Timeline:</strong> 1-2 days</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mr-6 flex-shrink-0">
+                            <span class="text-white font-bold">3</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Underwriting Review</h3>
+                            <p class="text-gray-600">Our underwriting team reviews your application, verifies information, and makes a lending decision based on conventional loan guidelines.</p>
+                            <p class="text-sm text-gray-500 mt-2"><strong>Timeline:</strong> 3-5 days</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mr-6 flex-shrink-0">
+                            <span class="text-white font-bold">4</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Approval & Closing Preparation</h3>
+                            <p class="text-gray-600">Receive your loan approval and work with our team to prepare for closing. We'll coordinate with all parties to ensure a smooth process.</p>
+                            <p class="text-sm text-gray-500 mt-2"><strong>Timeline:</strong> 7-10 days</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mr-6 flex-shrink-0">
+                            <span class="text-white font-bold">5</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Closing Day</h3>
+                            <p class="text-gray-600">Sign final documents, complete the transaction, and receive the keys to your new home. Congratulations!</p>
+                            <p class="text-sm text-gray-500 mt-2"><strong>Timeline:</strong> 1 day</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-on-scroll">
+                    <div class="program-detail-card rounded-2xl p-8">
+                        <h3 class="font-display text-2xl font-bold mb-6">Typical Timeline</h3>
+                        <div class="space-y-6">
+                            <div class="flex justify-between items-center p-4 bg-purple-50 rounded-lg">
+                                <span class="font-semibold">Total Process</span>
+                                <span class="text-purple-700 font-bold">21-30 days</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                                <span class="font-semibold">Fast Track</span>
+                                <span class="text-green-700 font-bold">15-20 days</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-yellow-50 rounded-lg">
+                                <span class="font-semibold">Complex Cases</span>
+                                <span class="text-yellow-700 font-bold">30-45 days</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 p-6 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold text-lg mb-3">Factors That May Affect Timeline</h4>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li>• Property appraisal scheduling</li>
+                                <li>• Document completeness</li>
+                                <li>• Title and inspection issues</li>
+                                <li>• Borrower responsiveness</li>
+                                <li>• Market conditions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example Scenario -->
+    <section class="py-20 bg-white/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="font-display text-4xl font-bold text-gray-900 mb-4">Example Scenario</h2>
+                <p class="text-xl text-gray-600">See how this program works in a real-world situation</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-on-scroll">
+                    <div class="program-detail-card rounded-2xl p-8">
+                        <h3 class="font-display text-2xl font-bold mb-6">Client Profile: The Johnson Family</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="font-semibold">Purchase Price:</span>
+                                <span>$425,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold">Down Payment (10%):</span>
+                                <span>$42,500</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold">Loan Amount:</span>
+                                <span>$382,500</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold">Interest Rate:</span>
+                                <span>7.2%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold">Loan Term:</span>
+                                <span>30 years</span>
+                            </div>
+                            <hr class="border-gray-300">
+                            <div class="flex justify-between font-semibold text-lg">
+                                <span>Monthly Payment:</span>
+                                <span class="text-purple-700">$2,594</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-on-scroll">
+                    <div class="program-detail-card rounded-2xl p-8">
+                        <h3 class="font-display text-2xl font-bold mb-6">Why This Worked</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-purple-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Good credit scores (750+) qualified for best rates</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-purple-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>10% down avoided FHA mortgage insurance</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-purple-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Stable employment history (5+ years)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-purple-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Property met all conventional requirements</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-purple-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Closed in 24 days with no issues</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-purple-600 to-purple-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="font-display text-4xl font-bold mb-6">Ready to Apply?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">
+                Let Team MAI help you determine if a conventional loan is right for your situation. 
+                Start your application today and get pre-approved in as little as 24 hours.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="cta-button bg-white text-purple-700 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors" data-modal="apply-modal">Start Application</button>
+                <button class="cta-button border-2 border-white text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white hover:text-purple-700 transition-colors" data-modal="schedule-modal">Schedule Consultation</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Programs -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="font-display text-4xl font-bold text-gray-900 mb-4">Related Programs</h2>
+                <p class="text-xl text-gray-600">Explore other loan options that might fit your needs</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="program-detail-card rounded-2xl p-8 text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white font-bold text-sm">FHA</span>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">FHA Loans</h3>
+                    <p class="text-gray-600 mb-6">Government-backed loans with lower credit requirements and down payments as low as 3.5%.</p>
+                    <a href="program-detail.html?type=fha" class="inline-flex items-center text-purple-700 font-semibold hover:text-purple-900 transition-colors">
+                        Learn More →
+                    </a>
+                </div>
+                
+                <div class="program-detail-card rounded-2xl p-8 text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">VA Loans</h3>
+                    <p class="text-gray-600 mb-6">Zero down payment options for veterans and active military members with competitive rates.</p>
+                    <a href="program-detail.html?type=va" class="inline-flex items-center text-purple-700 font-semibold hover:text-purple-900 transition-colors">
+                        Learn More →
+                    </a>
+                </div>
+                
+                <div class="program-detail-card rounded-2xl p-8 text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">Bank Statement Loans</h3>
+                    <p class="text-gray-600 mb-6">Perfect for self-employed borrowers who need alternative income documentation options.</p>
+                    <a href="program-detail.html?type=bank-statement" class="inline-flex items-center text-purple-700 font-semibold hover:text-purple-900 transition-colors">
+                        Learn More →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="font-display text-2xl font-bold mb-4">Team MAI</div>
+                    <p class="text-gray-400">Professional mortgage services in Pennsylvania. Specializing in purchase, refinance, and self-employed lending.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="loan-programs.html" class="hover:text-white transition-colors">Loan Programs</a></li>
+                        <li><a href="calculators.html" class="hover:text-white transition-colors">Calculators</a></li>
+                        <li><a href="knowledge.html" class="hover:text-white transition-colors">Knowledge Center</a></li>
+                        <li><a href="apply.html" class="hover:text-white transition-colors">Apply Now</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Phone: (215) 555-0123</li>
+                        <li>Email: info@teammai.com</li>
+                        <li>NMLS: #1234567</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Licensed In</h4>
+                    <p class="text-gray-400">Pennsylvania, New Jersey, Delaware</p>
+                    <div class="mt-4">
+                        <p class="text-xs text-gray-500">Equal Housing Lender</p>
+                        <p class="text-xs text-gray-500">NMLS Consumer Access</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Team MAI Mortgages. All rights reserved. Licensed by Absolute Mortgage & Lending.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="apply-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 class="font-display text-2xl font-bold mb-4">Apply for Pre-Approval</h3>
+            <form class="application-form space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" name="name" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                    <input type="tel" name="phone" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Loan Type</label>
+                    <select name="loanType" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option>Conventional</option>
+                        <option>FHA</option>
+                        <option>VA</option>
+                        <option>Self-Employed</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">Submit Application</button>
+            </form>
+            <div class="success-message mt-4 p-4 bg-green-100 text-green-700 rounded-lg" style="display: none;">
+                Thank you! We'll contact you within 24 hours to discuss your mortgage options.
+            </div>
+        </div>
+    </div>
+
+    <div id="schedule-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 class="font-display text-2xl font-bold mb-4">Schedule a Consultation</h3>
+            <form class="application-form space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" name="name" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                    <input type="tel" name="phone" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
+                    <select name="time" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option>Morning (9AM - 12PM)</option>
+                        <option>Afternoon (12PM - 5PM)</option>
+                        <option>Evening (5PM - 8PM)</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">Schedule Call</button>
+            </form>
+            <div class="success-message mt-4 p-4 bg-green-100 text-green-700 rounded-lg" style="display: none;">
+                Thank you! We'll call you at your preferred time to discuss your mortgage needs.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Program Detail Page Functionality
+        class ProgramDetailPage {
+            constructor() {
+                this.programData = {
+                    'conventional': {
+                        title: 'Conventional Loans',
+                        subtitle: 'Flexible financing options with competitive rates and terms for qualified borrowers',
+                        overview: 'Conventional loans are mortgage loans that are not insured or guaranteed by the federal government. They offer flexibility and competitive rates for borrowers with good credit and stable income.',
+                        image: 'resources/luxury-home-hero.jpg'
+                    },
+                    'fha': {
+                        title: 'FHA Loans',
+                        subtitle: 'Government-backed loans with lower down payment and credit requirements',
+                        overview: 'FHA loans are insured by the Federal Housing Administration and offer flexible qualification requirements, making homeownership accessible to more borrowers.',
+                        image: 'resources/luxury-interior.jpg'
+                    },
+                    'va': {
+                        title: 'VA Loans',
+                        subtitle: 'Zero down payment options for veterans and active military members',
+                        overview: 'VA loans are guaranteed by the Department of Veterans Affairs and provide excellent benefits for those who have served our country.',
+                        image: 'resources/success-keys.jpg'
+                    }
+                };
+                
+                this.loadProgramData();
+            }
+
+            loadProgramData() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const programType = urlParams.get('type') || 'conventional';
+                const program = this.programData[programType] || this.programData['conventional'];
+                
+                // Update page content based on program type
+                document.getElementById('program-title').innerHTML = `<span class="hero-gradient">${program.title}</span>`;
+                document.getElementById('program-subtitle').textContent = program.subtitle;
+                document.getElementById('program-overview').textContent = program.overview;
+                document.getElementById('program-image').src = program.image;
+                
+                // Update page title
+                document.title = `${program.title} - Team MAI Mortgages`;
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProgramDetailPage();
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

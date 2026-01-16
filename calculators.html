@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Calculators - Team MAI Mortgages</title>
+    <meta name="description" content="Use our comprehensive mortgage calculators to estimate payments, affordability, and refinance savings. Get accurate calculations for your home financing needs.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    
+    <style>
+        :root {
+            --royal-purple: #6B46C1;
+            --warm-cream: #F7F3E9;
+            --champagne-gold: #D4AF37;
+            --charcoal: #2D3748;
+            --soft-ivory: #FEFEFE;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--soft-ivory) 0%, var(--warm-cream) 100%);
+            color: var(--charcoal);
+        }
+        
+        .font-display { font-family: 'Playfair Display', serif; }
+        .font-accent { font-family: 'Crimson Text', serif; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--royal-purple) 0%, #8B5CF6 50%, var(--champagne-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--royal-purple) 0%, #8B5CF6 100%);
+        }
+        
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(107, 70, 193, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .calculator-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px -12px rgba(107, 70, 193, 0.15);
+        }
+        
+        .calculator-tab {
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .calculator-tab.active {
+            border-bottom-color: var(--royal-purple);
+            color: var(--royal-purple);
+            background: rgba(107, 70, 193, 0.05);
+        }
+        
+        .calculator-content {
+            display: none;
+        }
+        
+        .calculator-content.active {
+            display: block;
+        }
+        
+        .result-highlight {
+            background: linear-gradient(135deg, var(--royal-purple), #8B5CF6);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+        
+        .animate-on-scroll {
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--royal-purple);
+            z-index: 999;
+            padding: 2rem;
+        }
+        
+        .mobile-menu.active { display: block; }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--charcoal);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 border-b border-purple-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="font-display text-2xl font-bold text-purple-700">Team MAI</a>
+                    <div class="ml-2 text-sm text-gray-600">Mortgages</div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-purple-700 transition-colors">Home</a>
+                    <a href="loan-programs.html" class="text-gray-700 hover:text-purple-700 transition-colors">Loan Programs</a>
+                    <a href="calculators.html" class="text-purple-700 font-semibold">Calculators</a>
+                    <a href="knowledge.html" class="text-gray-700 hover:text-purple-700 transition-colors">Knowledge</a>
+                    <a href="reviews.html" class="text-gray-700 hover:text-purple-700 transition-colors">Reviews</a>
+                    <a href="about.html" class="text-gray-700 hover:text-purple-700 transition-colors">About</a>
+                    <a href="apply.html" class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Apply</a>
+                    <button id="language-toggle" class="ml-4 px-3 py-1 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors">VI</button>
+                </div>
+                
+                <div class="md:hidden">
+                    <button class="mobile-menu-toggle">
+                        <span class="block w-6 h-0.5 bg-gray-700 mb-1"></span>
+                        <span class="block w-6 h-0.5 bg-gray-700 mb-1"></span>
+                        <span class="block w-6 h-0.5 bg-gray-700"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <div class="flex flex-col space-y-6 mt-16">
+                <a href="index.html" class="text-white text-xl">Home</a>
+                <a href="loan-programs.html" class="text-white text-xl">Loan Programs</a>
+                <a href="calculators.html" class="text-white text-xl font-semibold">Calculators</a>
+                <a href="knowledge.html" class="text-white text-xl">Knowledge</a>
+                <a href="reviews.html" class="text-white text-xl">Reviews</a>
+                <a href="about.html" class="text-white text-xl">About</a>
+                <a href="apply.html" class="bg-white text-purple-700 px-6 py-3 rounded-lg text-xl font-semibold">Apply</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-purple-50 to-yellow-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="font-display text-5xl lg:text-6xl font-bold mb-6">
+                <span class="hero-gradient">Mortgage Calculators</span>
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                Use our comprehensive calculators to estimate your mortgage payments, determine how much house you can afford, 
+                and explore potential savings from refinancing.
+            </p>
+        </div>
+    </section>
+
+    <!-- Calculator Tabs -->
+    <section class="py-12 bg-white/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center mb-12 animate-on-scroll">
+                <button class="calculator-tab active px-6 py-4 font-semibold text-lg" data-calculator="payment">
+                    Payment Calculator
+                </button>
+                <button class="calculator-tab px-6 py-4 font-semibold text-lg" data-calculator="affordability">
+                    Affordability Calculator
+                </button>
+                <button class="calculator-tab px-6 py-4 font-semibold text-lg" data-calculator="refinance">
+                    Refinance Calculator
+                </button>
+            </div>
+
+            <!-- Payment Calculator -->
+            <div id="payment-calculator" class="calculator-content active">
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="calculator-card rounded-2xl p-8 animate-on-scroll">
+                        <h3 class="font-display text-3xl font-bold mb-6">Monthly Payment Calculator</h3>
+                        <form class="calculator-form space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Loan Amount</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <input type="number" name="loanAmount" id="payment-loan-amount" value="300000" 
+                                           class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Interest Rate (%)</label>
+                                <input type="number" name="interestRate" id="payment-interest-rate" value="7.2" step="0.01"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Loan Term (years)</label>
+                                <select name="loanTerm" id="payment-loan-term" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="15">15 years</option>
+                                    <option value="20">20 years</option>
+                                    <option value="25">25 years</option>
+                                    <option value="30" selected>30 years</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Property Tax (annual)</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <input type="number" name="propertyTax" id="payment-property-tax" value="3600"
+                                           class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Home Insurance (annual)</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <input type="number" name="homeInsurance" id="payment-home-insurance" value="1200"
+                                           class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">PMI (monthly, if applicable)</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <input type="number" name="pmi" id="payment-pmi" value="0"
+                                           class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="space-y-8">
+                        <div class="result-highlight animate-on-scroll">
+                            <h4 class="text-xl font-semibold mb-2">Monthly Payment</h4>
+                            <div class="text-4xl font-bold calculation-result" id="payment-result">$2,046</div>
+                            <p class="text-sm opacity-90 mt-2">Principal & Interest: <span id="payment-pi">$1,646</span></p>
+                        </div>
+                        
+                        <div class="calculator-card rounded-2xl p-6 animate-on-scroll">
+                            <h4 class="font-semibold text-lg mb-4">Payment Breakdown</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span>Principal & Interest</span>
+                                    <span id="payment-breakdown-pi">$1,646</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Property Tax</span>
+                                    <span id="payment-breakdown-tax">$300</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Home Insurance</span>
+                                    <span id="payment-breakdown-insurance">$100</span>
+                                </div>
+                                <div class="flex justify-between" id="payment-pmi-row" style="display: none;">
+                                    <span>PMI</span>
+                                    <span id="payment-breakdown-pmi">$0</span>
+                                </div>
+                                <hr class="border-gray-300">
+                                <div class="flex justify-between font-semibold">
+                                    <span>Total Monthly Payment</span>
+                                    <span id="payment-breakdown-total">$2,046</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="calculator-card rounded-2xl p-6 animate-on-scroll">
+                            <h4 class="font-semibold text-lg mb-4">Loan Summary</h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Total Interest Paid</span>
+                                    <span id="payment-total-interest">$292,560</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Total Amount Paid</span>
+                                    <span id="payment-total-amount">$592,560</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Number of Payments</span>
+                                    <span id="payment-num-payments">360</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Affordability Calculator -->
+            <div id="affordability-calculator" class="calculator-content">
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="calculator-card rounded-2xl p-8 animate-on-scroll">
+                        <h3 class="font-display text-3xl font-bold mb-6">Affordability Calculator</h3>
+                        <form class="calculator-form space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Annual Gross Income</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <input type="number" name="annualIncome" id="afford-income" value="75000"
+                                           class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Monthly Debt Payments</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <input type="number" name="monthlyDebt" id="afford-debt" value="500"
+                                           class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Down Payment</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <input type="number" name="downPayment" id="afford-down" value="20000"
+                                           class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Interest Rate (%)</label>
+                                <input type="number" name="interestRate" id="afford-rate" value="7.2" step="0.01"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Loan Term (years)</label>
+                                <select name="loanTerm" id="afford-term" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="15">15 years</option>
+                                    <option value="30" selected>30 years</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Front-End DTI Ratio (%)</label>
+                                <select name="frontRatio" id="afford-front-ratio" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="28">28% (Conservative)</option>
+                                    <option value="31" selected>31% (Standard)</option>
+                                    <option value="36">36% (Aggressive)</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="space-y-8">
+                        <div class="result-highlight animate-on-scroll">
+                            <h4 class="text-xl font-semibold mb-2">Maximum Home Price</h4>
+                            <div class="text-4xl font-bold calculation-result" id="afford-price-result">$385,000</div>
+                            <p class="text-sm opacity-90 mt-2">Monthly Payment: <span id="afford-payment">$2,387</span></p>
+                        </div>
+                        
+                        <div class="calculator-card rounded-2xl p-6 animate-on-scroll">
+                            <h4 class="font-semibold text-lg mb-4">Affordability Breakdown</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span>Monthly Income</span>
+                                    <span id="afford-monthly-income">$6,250</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Max Housing Payment</span>
+                                    <span id="afford-max-housing">$1,938</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Existing Debt Payments</span>
+                                    <span id="afford-existing-debt">$500</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Available for Housing</span>
+                                    <span id="afford-available">$1,438</span>
+                                </div>
+                                <hr class="border-gray-300">
+                                <div class="flex justify-between font-semibold">
+                                    <span>Recommended Max Price</span>
+                                    <span id="afford-recommended">$385,000</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="calculator-card rounded-2xl p-6 animate-on-scroll">
+                            <h4 class="font-semibold text-lg mb-4">Loan Details</h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Loan Amount</span>
+                                    <span id="afford-loan-amount">$365,000</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Down Payment %</span>
+                                    <span id="afford-down-percent">5.2%</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Back-End DTI</span>
+                                    <span id="afford-back-dti">38.2%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Refinance Calculator -->
+            <div id="refinance-calculator" class="calculator-content">
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="calculator-card rounded-2xl p-8 animate-on-scroll">
+                        <h3 class="font-display text-3xl font-bold mb-6">Refinance Savings Calculator</h3>
+                        <form class="calculator-form space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Current Loan Balance</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <input type="number" name="currentBalance" id="refi-balance" value="250000"
+                                           class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Current Interest Rate (%)</label>
+                                <input type="number" name="currentRate" id="refi-current-rate" value="8.0" step="0.01"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">New Interest Rate (%)</label>
+                                <input type="number" name="newRate" id="refi-new-rate" value="7.2" step="0.01"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Remaining Term (years)</label>
+                                <input type="number" name="remainingTerm" id="refi-term" value="25"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Closing Costs</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <input type="number" name="closingCosts" id="refi-costs" value="5000"
+                                           class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="space-y-8">
+                        <div class="result-highlight animate-on-scroll">
+                            <h4 class="text-xl font-semibold mb-2">Monthly Savings</h4>
+                            <div class="text-4xl font-bold calculation-result" id="refi-savings">$142</div>
+                            <p class="text-sm opacity-90 mt-2">Break-even: <span id="refi-break-even">35 months</span></p>
+                        </div>
+                        
+                        <div class="calculator-card rounded-2xl p-6 animate-on-scroll">
+                            <h4 class="font-semibold text-lg mb-4">Payment Comparison</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span>Current Payment</span>
+                                    <span id="refi-current-payment">$1,834</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>New Payment</span>
+                                    <span id="refi-new-payment">$1,692</span>
+                                </div>
+                                <hr class="border-gray-300">
+                                <div class="flex justify-between font-semibold text-green-600">
+                                    <span>Monthly Savings</span>
+                                    <span id="refi-monthly-savings">$142</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="calculator-card rounded-2xl p-6 animate-on-scroll">
+                            <h4 class="font-semibold text-lg mb-4">Long-Term Analysis</h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Total Interest (Current)</span>
+                                    <span id="refi-current-interest">$300,200</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Total Interest (New)</span>
+                                    <span id="refi-new-interest">$257,600</span>
+                                </div>
+                                <div class="flex justify-between font-semibold text-green-600">
+                                    <span>Lifetime Savings</span>
+                                    <span id="refi-lifetime-savings">$42,600</span>
+                                </div>
+                                <hr class="border-gray-300">
+                                <div class="flex justify-between">
+                                    <span>Break-Even Point</span>
+                                    <span id="refi-break-even-time">35 months</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-purple-600 to-purple-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="font-display text-4xl font-bold mb-6">Get Your Personalized Rate Quote</h2>
+                    <p class="text-xl mb-8">
+                        These calculators provide estimates based on standard assumptions. For accurate rates and 
+                        personalized loan options tailored to your specific situation, contact our team today.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="cta-button bg-white text-purple-700 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors" data-modal="apply-modal">Get Pre-Approved</button>
+                        <button class="cta-button border-2 border-white text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white hover:text-purple-700 transition-colors" data-modal="schedule-modal">Schedule Consultation</button>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <img src="resources/team-photo.jpg" alt="Team MAI" class="w-full max-w-md mx-auto rounded-2xl shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="font-display text-2xl font-bold mb-4">Team MAI</div>
+                    <p class="text-gray-400">Professional mortgage services in Pennsylvania. Specializing in purchase, refinance, and self-employed lending.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="loan-programs.html" class="hover:text-white transition-colors">Loan Programs</a></li>
+                        <li><a href="calculators.html" class="hover:text-white transition-colors">Calculators</a></li>
+                        <li><a href="knowledge.html" class="hover:text-white transition-colors">Knowledge Center</a></li>
+                        <li><a href="apply.html" class="hover:text-white transition-colors">Apply Now</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Phone: (215) 555-0123</li>
+                        <li>Email: info@teammai.com</li>
+                        <li>NMLS: #1234567</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Licensed In</h4>
+                    <p class="text-gray-400">Pennsylvania, New Jersey, Delaware</p>
+                    <div class="mt-4">
+                        <p class="text-xs text-gray-500">Equal Housing Lender</p>
+                        <p class="text-xs text-gray-500">NMLS Consumer Access</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Team MAI Mortgages. All rights reserved. Licensed by Absolute Mortgage & Lending.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="apply-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 class="font-display text-2xl font-bold mb-4">Apply for Pre-Approval</h3>
+            <form class="application-form space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" name="name" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                    <input type="tel" name="phone" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Loan Type</label>
+                    <select name="loanType" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option>Purchase</option>
+                        <option>Refinance</option>
+                        <option>Self-Employed</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">Submit Application</button>
+            </form>
+            <div class="success-message mt-4 p-4 bg-green-100 text-green-700 rounded-lg" style="display: none;">
+                Thank you! We'll contact you within 24 hours to discuss your mortgage options.
+            </div>
+        </div>
+    </div>
+
+    <div id="schedule-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 class="font-display text-2xl font-bold mb-4">Schedule a Consultation</h3>
+            <form class="application-form space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" name="name" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                    <input type="tel" name="phone" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
+                    <select name="time" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option>Morning (9AM - 12PM)</option>
+                        <option>Afternoon (12PM - 5PM)</option>
+                        <option>Evening (5PM - 8PM)</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">Schedule Call</button>
+            </form>
+            <div class="success-message mt-4 p-4 bg-green-100 text-green-700 rounded-lg" style="display: none;">
+                Thank you! We'll call you at your preferred time to discuss your mortgage needs.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced calculator functionality
+        class MortgageCalculators {
+            constructor() {
+                this.setupTabs();
+                this.setupCalculators();
+            }
+
+            setupTabs() {
+                const tabs = document.querySelectorAll('.calculator-tab');
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const calculatorType = tab.getAttribute('data-calculator');
+                        this.switchCalculator(calculatorType);
+                    });
+                });
+            }
+
+            switchCalculator(type) {
+                // Update tabs
+                document.querySelectorAll('.calculator-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector(`[data-calculator="${type}"]`).classList.add('active');
+
+                // Update content
+                document.querySelectorAll('.calculator-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(`${type}-calculator`).classList.add('active');
+            }
+
+            setupCalculators() {
+                // Payment Calculator
+                const paymentInputs = document.querySelectorAll('#payment-calculator input, #payment-calculator select');
+                paymentInputs.forEach(input => {
+                    input.addEventListener('input', this.calculatePayment.bind(this));
+                });
+
+                // Affordability Calculator
+                const affordInputs = document.querySelectorAll('#affordability-calculator input, #affordability-calculator select');
+                affordInputs.forEach(input => {
+                    input.addEventListener('input', this.calculateAffordability.bind(this));
+                });
+
+                // Refinance Calculator
+                const refiInputs = document.querySelectorAll('#refinance-calculator input');
+                refiInputs.forEach(input => {
+                    input.addEventListener('input', this.calculateRefinance.bind(this));
+                });
+
+                // Initial calculations
+                this.calculatePayment();
+                this.calculateAffordability();
+                this.calculateRefinance();
+            }
+
+            calculatePayment() {
+                const loanAmount = parseFloat(document.getElementById('payment-loan-amount').value) || 0;
+                const interestRate = parseFloat(document.getElementById('payment-interest-rate').value) || 0;
+                const loanTerm = parseInt(document.getElementById('payment-loan-term').value) || 30;
+                const propertyTax = parseFloat(document.getElementById('payment-property-tax').value) || 0;
+                const homeInsurance = parseFloat(document.getElementById('payment-home-insurance').value) || 0;
+                const pmi = parseFloat(document.getElementById('payment-pmi').value) || 0;
+
+                if (loanAmount > 0 && interestRate > 0) {
+                    const monthlyRate = interestRate / 100 / 12;
+                    const numPayments = loanTerm * 12;
+                    const principalInterest = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / 
+                                             (Math.pow(1 + monthlyRate, numPayments) - 1);
+                    
+                    const monthlyTax = propertyTax / 12;
+                    const monthlyInsurance = homeInsurance / 12;
+                    const totalPayment = principalInterest + monthlyTax + monthlyInsurance + pmi;
+
+                    // Update display
+                    document.getElementById('payment-result').textContent = this.formatCurrency(totalPayment);
+                    document.getElementById('payment-pi').textContent = this.formatCurrency(principalInterest);
+                    document.getElementById('payment-breakdown-pi').textContent = this.formatCurrency(principalInterest);
+                    document.getElementById('payment-breakdown-tax').textContent = this.formatCurrency(monthlyTax);
+                    document.getElementById('payment-breakdown-insurance').textContent = this.formatCurrency(monthlyInsurance);
+                    document.getElementById('payment-breakdown-total').textContent = this.formatCurrency(totalPayment);
+                    document.getElementById('payment-total-amount').textContent = this.formatCurrency(totalPayment * numPayments);
+                    document.getElementById('payment-num-payments').textContent = numPayments.toLocaleString();
+
+                    // PMI display
+                    if (pmi > 0) {
+                        document.getElementById('payment-pmi-row').style.display = 'flex';
+                        document.getElementById('payment-breakdown-pmi').textContent = this.formatCurrency(pmi);
+                    } else {
+                        document.getElementById('payment-pmi-row').style.display = 'none';
+                    }
+
+                    // Total interest
+                    const totalInterest = (totalPayment * numPayments) - loanAmount;
+                    document.getElementById('payment-total-interest').textContent = this.formatCurrency(totalInterest);
+                }
+            }
+
+            calculateAffordability() {
+                const annualIncome = parseFloat(document.getElementById('afford-income').value) || 0;
+                const monthlyDebt = parseFloat(document.getElementById('afford-debt').value) || 0;
+                const downPayment = parseFloat(document.getElementById('afford-down').value) || 0;
+                const interestRate = parseFloat(document.getElementById('afford-rate').value) || 0;
+                const loanTerm = parseInt(document.getElementById('afford-term').value) || 30;
+                const frontRatio = parseFloat(document.getElementById('afford-front-ratio').value) || 31;
+
+                if (annualIncome > 0 && interestRate > 0) {
+                    const monthlyIncome = annualIncome / 12;
+                    const maxHousingPayment = monthlyIncome * (frontRatio / 100);
+                    const availableForHousing = maxHousingPayment - monthlyDebt;
+
+                    // Calculate maximum loan amount
+                    const monthlyRate = interestRate / 100 / 12;
+                    const numPayments = loanTerm * 12;
+                    const maxLoanAmount = availableForHousing * (Math.pow(1 + monthlyRate, numPayments) - 1) / 
+                                         (monthlyRate * Math.pow(1 + monthlyRate, numPayments));
+                    
+                    const maxHomePrice = maxLoanAmount + downPayment;
+                    const monthlyPayment = availableForHousing;
+
+                    // Update display
+                    document.getElementById('afford-price-result').textContent = this.formatCurrency(maxHomePrice);
+                    document.getElementById('afford-payment').textContent = this.formatCurrency(monthlyPayment);
+                    document.getElementById('afford-monthly-income').textContent = this.formatCurrency(monthlyIncome);
+                    document.getElementById('afford-max-housing').textContent = this.formatCurrency(maxHousingPayment);
+                    document.getElementById('afford-existing-debt').textContent = this.formatCurrency(monthlyDebt);
+                    document.getElementById('afford-available').textContent = this.formatCurrency(availableForHousing);
+                    document.getElementById('afford-recommended').textContent = this.formatCurrency(maxHomePrice);
+                    document.getElementById('afford-loan-amount').textContent = this.formatCurrency(maxLoanAmount);
+                    document.getElementById('afford-down-percent').textContent = ((downPayment / maxHomePrice) * 100).toFixed(1) + '%';
+                    
+                    const backEndDTI = ((monthlyDebt + monthlyPayment) / monthlyIncome) * 100;
+                    document.getElementById('afford-back-dti').textContent = backEndDTI.toFixed(1) + '%';
+                }
+            }
+
+            calculateRefinance() {
+                const currentBalance = parseFloat(document.getElementById('refi-balance').value) || 0;
+                const currentRate = parseFloat(document.getElementById('refi-current-rate').value) || 0;
+                const newRate = parseFloat(document.getElementById('refi-new-rate').value) || 0;
+                const remainingTerm = parseInt(document.getElementById('refi-term').value) || 30;
+                const closingCosts = parseFloat(document.getElementById('refi-costs').value) || 0;
+
+                if (currentBalance > 0 && currentRate > 0 && newRate > 0) {
+                    // Current payment
+                    const currentMonthlyRate = currentRate / 100 / 12;
+                    const currentPayment = currentBalance * (currentMonthlyRate * Math.pow(1 + currentMonthlyRate, remainingTerm * 12)) / 
+                                          (Math.pow(1 + currentMonthlyRate, remainingTerm * 12) - 1);
+
+                    // New payment
+                    const newMonthlyRate = newRate / 100 / 12;
+                    const newPayment = currentBalance * (newMonthlyRate * Math.pow(1 + newMonthlyRate, remainingTerm * 12)) / 
+                                      (Math.pow(1 + newMonthlyRate, remainingTerm * 12) - 1);
+
+                    const monthlySavings = currentPayment - newPayment;
+                    const breakEvenMonths = closingCosts / monthlySavings;
+
+                    // Total interest calculations
+                    const currentTotalInterest = (currentPayment * remainingTerm * 12) - currentBalance;
+                    const newTotalInterest = (newPayment * remainingTerm * 12) - currentBalance;
+                    const lifetimeSavings = currentTotalInterest - newTotalInterest;
+
+                    // Update display
+                    document.getElementById('refi-savings').textContent = this.formatCurrency(monthlySavings);
+                    document.getElementById('refi-break-even').textContent = Math.ceil(breakEvenMonths) + ' months';
+                    document.getElementById('refi-current-payment').textContent = this.formatCurrency(currentPayment);
+                    document.getElementById('refi-new-payment').textContent = this.formatCurrency(newPayment);
+                    document.getElementById('refi-monthly-savings').textContent = this.formatCurrency(monthlySavings);
+                    document.getElementById('refi-current-interest').textContent = this.formatCurrency(currentTotalInterest);
+                    document.getElementById('refi-new-interest').textContent = this.formatCurrency(newTotalInterest);
+                    document.getElementById('refi-lifetime-savings').textContent = this.formatCurrency(lifetimeSavings);
+                    document.getElementById('refi-break-even-time').textContent = Math.ceil(breakEvenMonths) + ' months';
+                }
+            }
+
+            formatCurrency(amount) {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount);
+            }
+        }
+
+        // Initialize calculators when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new MortgageCalculators();
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>
