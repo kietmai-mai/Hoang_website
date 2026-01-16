@@ -45,6 +45,7 @@ updateLanguage() {
             typeSpeed: 50,
             showCursor: false,
             loop: false,
+            contentType: 'html',
             onComplete: () => typewriter.classList.add('typing-complete')
         });
     }
@@ -169,6 +170,7 @@ updateLanguage() {
                 typeSpeed: 50,
                 showCursor: false,
                 loop: false,
+                contentType: 'html',
                 onComplete: () => {
                     element.classList.add('typing-complete');
                 }
