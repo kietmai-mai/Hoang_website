@@ -18,15 +18,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
     
      <style>
-          html {
-  scrollbar-gutter: stable;
-}
-    
-img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
+<style>
+    html {
+        scrollbar-gutter: stable;
+        overflow-y: scroll; /* fallback – ensures width never jumps */
+    }
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    :root {
+        --royal-purple: #6B46C1;
+        --warm-cream: #F7F3E9;
+        --champagne-gold: #D4AF37;
+        --charcoal: #2D3748;
+        --soft-ivory: #FEFEFE;
+    }
+
+    /* ... all your other styles remain unchanged ... */
+
+    .typewriter {
+        border-right: 2px solid var(--champagne-gold);
+        animation: blink 1s infinite;
+        white-space: nowrap; /* prevents wrapping/reflow during typing */
+    }
+
+    .typing-complete {
+        border-right: none;
+    }
+
+    /* ... rest of your @keyframes, .modal, etc. ... */
+         
     <img src="mai-hero-portrait.png" alt="..." class="w-full max-w-md mx-auto rounded-2xl shadow-2xl" width="400" height="500" loading="eager">
   
         :root {
@@ -246,7 +271,7 @@ img {
             <div class="space-y-8">
                 <div class="space-y-4">
                     <h1 class="font-display text-5xl lg:text-6xl font-bold leading-tight">
-                        <span class="hero-gradient typewriter" data-lang="hero-headline">Ready to Start Your Journey?</span>
+                        <span class="hero-gradient typewriter" data-lang="hero-headline"></span> 
                     </h1>
                     <p class="text-xl text-gray-600 font-accent" data-lang="hero-subtext">Breaking the Ceiling - <span class="counter" data-target="53">0</span> Units Funded</p>
                 </div>
