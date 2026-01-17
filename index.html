@@ -36,15 +36,17 @@
 
     /* ... all your other styles remain unchanged ... */
 
-    .typewriter {
-        border-right: 2px solid var(--champagne-gold);
-        animation: blink 1s infinite;
-        white-space: pre-line; 
-    }
+   .typewriter {
+    border-right: 2px solid var(--champagne-gold);
+    animation: blink 1s infinite;
+    white-space: pre-line;      /* Allows <br> to create new lines + normal wrapping */
+    display: inline-block;      /* Helps with layout */
+    min-height: 1.2em;          /* Prevents jump when typing completes */
+}
 
-    .typing-complete {
-        border-right: none;
-    }
+.typing-complete {
+    border-right: none;
+}
 
     /* ... rest of your @keyframes, .modal, etc. ... */
          
