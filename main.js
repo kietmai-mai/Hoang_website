@@ -381,22 +381,28 @@ updateLanguage() {
     }
 
     // Mobile Menu
-
-    setupMobileMenu() {
+setupMobileMenu() {
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const mobileMenu = document.querySelector('.mobile-menu');
     
-    if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            
-            // Optional: make hamburger look like X when open
-            menuToggle.classList.toggle('active');
-            
-            // Prevent body scroll when menu is open (good UX)
-            document.body.classList.toggle('overflow-hidden', !mobileMenu.classList.contains('hidden'));
-        });
+    if (!menuToggle || !mobileMenu) {
+        console.warn("Mobile menu elements not found");
+        return;
     }
+
+    menuToggle.addEventListener('click', () => {
+        // Toggle the Tailwind 'hidden' class
+        mobileMenu.classList.toggle('hidden');
+        
+        // Optional: make hamburger look like X (using your existing .active styles)
+        menuToggle.classList.toggle('active');
+        
+        // Prevent body scrolling when menu is open (improves UX)
+        document.body.classList.toggle('overflow-hidden', !mobileMenu.classList.contains('hidden'));
+        
+        // Debug line – remove later
+        console.log("Menu toggled. Hidden?", mobileMenu.classList.contains('hidden'));
+    });
 }
   body.overflow-hidden {
     overflow: hidden;
