@@ -381,45 +381,37 @@ updateLanguage() {
 
     // Mobile Menu
 setupMobileMenu() {
-    // Wait a tiny bit longer in case DOM is still settling (rare but happens with CDNs)
+    // Run after a short delay to handle CDN loading order
     setTimeout(() => {
-        const menuToggle = document.querySelector('.mobile-menu-toggle');
-        const mobileMenu = document.querySelector('.mobile-menu');
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        const menu = document.querySelector('.mobile-menu');
 
-        console.log('[Mobile Menu Debug] Toggle button exists:', !!menuToggle);
-        console.log('[Mobile Menu Debug] Menu element exists:', !!mobileMenu);
-
-        if (!menuToggle) {
-            console.error('[Mobile Menu] Hamburger button (.mobile-menu-toggle) not found in DOM');
+        if (!toggle) {
+            console.error("Hamburger button NOT FOUND – check class='mobile-menu-toggle'");
             return;
         }
-        if (!mobileMenu) {
-            console.error('[Mobile Menu] Mobile menu container (.mobile-menu) not found in DOM');
+        if (!menu) {
+            console.error("Mobile menu container NOT FOUND – check class='mobile-menu'");
             return;
         }
 
-        // Remove any previous listeners to avoid duplicates
-        const cleanToggle = menuToggle.cloneNode(true);
-        menuToggle.parentNode.replaceChild(cleanToggle, menuToggle);
+        console.log("Mobile menu setup: elements found ✓");
 
-        cleanToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); // prevent bubbling issues
-            console.log('[Mobile Menu] Hamburger CLICKED!');
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("CLICK DETECTED on hamburger");
 
-            // Toggle visibility
-            mobileMenu.classList.toggle('hidden');
+            menu.classList.toggle('hidden');
+            toggle.classList.toggle('active');
 
-            // Toggle X animation on button
-            cleanToggle.classList.toggle('active');
+            document.body.classList.toggle('overflow-hidden', !menu.classList.contains('hidden'));
 
-            // Scroll lock
-            document.body.classList.toggle('overflow-hidden', !mobileMenu.classList.contains('hidden'));
-
-            console.log('[Mobile Menu] Menu hidden status after toggle:', mobileMenu.classList.contains('hidden'));
+            console.log("Menu now visible:", !menu.classList.contains('hidden'));
         });
 
-        console.log('[Mobile Menu] Listener successfully attached');
-    }, 500); // small delay helps with CDN-loaded elements
+        console.log("Click listener attached successfully");
+    }, 300);
 }
     // Remove any old listeners to prevent duplicates
     const newToggle = menuToggle.cloneNode(true);
