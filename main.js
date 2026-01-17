@@ -383,24 +383,33 @@ updateLanguage() {
 setupMobileMenu() {
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const mobileMenu = document.querySelector('.mobile-menu');
-    
+
+    // Debug: check if elements are found at all
+    console.log("menuToggle found:", !!menuToggle);
+    console.log("mobileMenu found:", !!mobileMenu);
+
     if (!menuToggle || !mobileMenu) {
-        console.warn("Mobile menu elements not found");
+        console.error("Mobile menu elements missing! Check HTML structure.");
         return;
     }
 
-    menuToggle.addEventListener('click', () => {
-        // Toggle the Tailwind 'hidden' class
+    // Remove any old listeners to prevent duplicates
+    const newToggle = menuToggle.cloneNode(true);
+    menuToggle.parentNode.replaceChild(newToggle, menuToggle);
+
+    newToggle.addEventListener('click', (e) => {
+        e.preventDefault(); // prevent any default behavior
+        console.log("Hamburger clicked!");
+
         mobileMenu.classList.toggle('hidden');
-        
-        // Optional: make hamburger look like X (using your existing .active styles)
-        menuToggle.classList.toggle('active');
-        
-        // Prevent body scrolling when menu is open (improves UX)
+
+        // Toggle X icon
+        newToggle.classList.toggle('active');
+
+        // Lock/unlock body scroll
         document.body.classList.toggle('overflow-hidden', !mobileMenu.classList.contains('hidden'));
-        
-        // Debug line – remove later
-        console.log("Menu toggled. Hidden?", mobileMenu.classList.contains('hidden'));
+
+        console.log("Menu is now hidden:", mobileMenu.classList.contains('hidden'));
     });
 }
   body.overflow-hidden {
