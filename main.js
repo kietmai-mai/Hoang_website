@@ -155,6 +155,7 @@ class TeamMAIWebsite {
                 strings: [element.textContent],
                 typeSpeed: 50,
                 showCursor: false,
+                loop: false,
                 onComplete: () => {
                     element.classList.add('typing-complete');
                 }
