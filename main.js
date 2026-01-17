@@ -4,6 +4,7 @@ class TeamMAIWebsite {
         this.currentLanguage = 'en';
         this.init();
     }
+
     init() {
         this.setupLanguageToggle();
         this.setupSmoothScrolling();
@@ -27,38 +28,24 @@ class TeamMAIWebsite {
         this.loadLanguagePreference();
     }
 
-updateLanguage() {
-    document.querySelectorAll('[data-lang]').forEach(element => {
-        const key = element.getAttribute('data-lang');
-        if (this.translations[this.currentLanguage] && this.translations[this.currentLanguage][key]) {
-            element.textContent = this.translations[this.currentLanguage][key];
-        }
-    });
-
-    // Re-init Typed.js after language change
-    const typewriter = document.querySelector('.typewriter');
-    if (typewriter && typeof Typed !== 'undefined') {
-        typewriter.textContent = ''; // clear
-        new Typed('.typewriter', {
-            strings: [this.translations[this.currentLanguage]['hero-headline']],
-            typeSpeed: 50,
-            showCursor: false,
-            loop: false,
-            contentType: 'html',
-            onComplete: () => typewriter.classList.add('typing-complete')
+    updateLanguage() {
+        document.querySelectorAll('[data-lang]').forEach(element => {
+            const key = element.getAttribute('data-lang');
+            if (this.translations[this.currentLanguage] && this.translations[this.currentLanguage][key]) {
+                element.textContent = this.translations[this.currentLanguage][key];
+            }
         });
+        
+        // Update language toggle text
+        const langToggle = document.getElementById('language-toggle');
+        if (langToggle) {
+            langToggle.textContent = this.currentLanguage === 'en' ? 'VI' : 'EN';
+        }
     }
-
-    // Update toggle button
-    const langToggle = document.getElementById('language-toggle');
-    if (langToggle) {
-        langToggle.textContent = this.currentLanguage === 'en' ? 'VI' : 'EN';
-    }
-}
 
     translations = {
         en: {
-            'hero-headline': 'Ready to Start<br>Your Journey?',
+            'hero-headline': 'Ready to Start Your Journey?',
             'hero-subtext': 'Breaking the Ceiling - 53 Units Funded',
             'cta-apply': 'Apply Now',
             'cta-schedule': 'Schedule a Call',
@@ -78,7 +65,7 @@ updateLanguage() {
             'apply': 'Apply'
         },
         vi: {
-            'hero-headline': 'Sẵn Sàng Bắt Đầu<br>Hành Trình?',
+            'hero-headline': 'Sẵn Sàng Bắt Đầu Hành Trình?',
             'hero-subtext': 'Vượt Qua Giới Hạn - 53 Giao Dịch Được Tài Trợ',
             'cta-apply': 'Nộp Đơn Ngay',
             'cta-schedule': 'Đặt Lịch Tư Vấn',
@@ -168,8 +155,6 @@ updateLanguage() {
                 strings: [element.textContent],
                 typeSpeed: 50,
                 showCursor: false,
-                loop: false,
-                contentType: 'html',
                 onComplete: () => {
                     element.classList.add('typing-complete');
                 }
@@ -380,62 +365,19 @@ updateLanguage() {
     }
 
     // Mobile Menu
-setupMobileMenu() {
-    // Run after a short delay to handle CDN loading order
-    setTimeout(() => {
-        const toggle = document.querySelector('.mobile-menu-toggle');
-        const menu = document.querySelector('.mobile-menu');
-
-        if (!toggle) {
-            console.error("Hamburger button NOT FOUND – check class='mobile-menu-toggle'");
-            return;
+    setupMobileMenu() {
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
         }
-        if (!menu) {
-            console.error("Mobile menu container NOT FOUND – check class='mobile-menu'");
-            return;
-        }
-
-        console.log("Mobile menu setup: elements found ✓");
-
-        toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log("CLICK DETECTED on hamburger");
-
-            menu.classList.toggle('hidden');
-            toggle.classList.toggle('active');
-
-            document.body.classList.toggle('overflow-hidden', !menu.classList.contains('hidden'));
-
-            console.log("Menu now visible:", !menu.classList.contains('hidden'));
-        });
-
-        console.log("Click listener attached successfully");
-    }, 300);
+    }
 }
-    // Remove any old listeners to prevent duplicates
-    const newToggle = menuToggle.cloneNode(true);
-    menuToggle.parentNode.replaceChild(newToggle, menuToggle);
 
-    newToggle.addEventListener('click', (e) => {
-        e.preventDefault(); // prevent any default behavior
-        console.log("Hamburger clicked!");
-
-        mobileMenu.classList.toggle('hidden');
-
-        // Toggle X icon
-        newToggle.classList.toggle('active');
-
-        // Lock/unlock body scroll
-        document.body.classList.toggle('overflow-hidden', !mobileMenu.classList.contains('hidden'));
-
-        console.log("Menu is now hidden:", mobileMenu.classList.contains('hidden'));
-    });
-}
-  body.overflow-hidden {
-    overflow: hidden;
-    height: 100vh;
-}  
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new TeamMAIWebsite();
