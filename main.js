@@ -4,7 +4,6 @@ class TeamMAIWebsite {
         this.currentLanguage = 'en';
         this.init();
     }
-
     init() {
         this.setupLanguageToggle();
         this.setupSmoothScrolling();
