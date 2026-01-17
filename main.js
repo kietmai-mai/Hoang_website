@@ -45,7 +45,7 @@ class TeamMAIWebsite {
 
     translations = {
         en: {
-            'hero-headline': 'Ready to Start Your Journey?',
+            'hero-headline': 'Ready to Start<br>Your Journey?',
             'hero-subtext': 'Breaking the Ceiling - 53 Units Funded',
             'cta-apply': 'Apply Now',
             'cta-schedule': 'Schedule a Call',
@@ -65,7 +65,7 @@ class TeamMAIWebsite {
             'apply': 'Apply'
         },
         vi: {
-            'hero-headline': 'Sẵn Sàng Bắt Đầu Hành Trình?',
+            'hero-headline': 'Sẵn Sàng Bắt Đầu<br>Hành Trình?',
             'hero-subtext': 'Vượt Qua Giới Hạn - 53 Giao Dịch Được Tài Trợ',
             'cta-apply': 'Nộp Đơn Ngay',
             'cta-schedule': 'Đặt Lịch Tư Vấn',
