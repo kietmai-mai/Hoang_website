@@ -149,19 +149,21 @@ class TeamMAIWebsite {
     }
 
     setupTypewriter() {
-        const element = document.querySelector('.typewriter');
-        if (element && typeof Typed !== 'undefined') {
-            new Typed('.typewriter', {
-                strings: [element.textContent],
-                typeSpeed: 50,
-                showCursor: false,
-                loop: false,
-                onComplete: () => {
-                    element.classList.add('typing-complete');
-                }
-            });
-        }
+    const element = document.querySelector('.typewriter');
+    if (element && typeof Typed !== 'undefined') {
+        new Typed('.typewriter', {
+            strings: [this.translations[this.currentLanguage]['hero-headline']],  // use translation, not element.textContent
+            typeSpeed: 50,
+            showCursor: true,          // optional: show blinking bar
+            cursorChar: '|',
+            loop: false,
+            contentType: 'html',       // ← THIS IS REQUIRED for <br> to work
+            onComplete: () => {
+                element.classList.add('typing-complete');
+            }
+        });
     }
+}
 
     setupCounterAnimations() {
         const counters = document.querySelectorAll('.counter');
