@@ -381,19 +381,27 @@ updateLanguage() {
     }
 
     // Mobile Menu
+
     setupMobileMenu() {
-        const menuToggle = document.querySelector('.mobile-menu-toggle');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        
-        if (menuToggle && mobileMenu) {
-            menuToggle.addEventListener('click', () => {
-                mobileMenu.classList.toggle('active');
-                menuToggle.classList.toggle('active');
-            });
-        }
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    
+    if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            
+            // Optional: make hamburger look like X when open
+            menuToggle.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open (good UX)
+            document.body.classList.toggle('overflow-hidden', !mobileMenu.classList.contains('hidden'));
+        });
     }
 }
-
+  body.overflow-hidden {
+    overflow: hidden;
+    height: 100vh;
+}  
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new TeamMAIWebsite();
