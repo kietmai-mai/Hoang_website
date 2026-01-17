@@ -240,13 +240,14 @@ Your description text here starts cleanly on a new line below the image. Add par
 <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 border-b border-purple-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
             <div class="flex items-center">
                 <div class="font-display text-2xl font-bold text-purple-700">Team MAI</div>
                 <div class="ml-2 text-sm text-gray-600">Mortgages</div>
             </div>
 
+            <!-- Desktop menu -->
             <div class="hidden md:flex items-center space-x-8">
-                <!-- Desktop links here (unchanged) -->
                 <a href="#home" class="text-gray-700 hover:text-purple-700 transition-colors" data-lang="home">Home</a>
                 <a href="loan-programs.html" class="text-gray-700 hover:text-purple-700 transition-colors" data-lang="loan-programs">Loan Programs</a>
                 <a href="calculators.html" class="text-gray-700 hover:text-purple-700 transition-colors" data-lang="calculators">Calculators</a>
@@ -257,8 +258,9 @@ Your description text here starts cleanly on a new line below the image. Add par
                 <button id="language-toggle" class="ml-4 px-3 py-1 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors">VI</button>
             </div>
 
+            <!-- Hamburger -->
             <div class="md:hidden">
-                <button class="mobile-menu-toggle focus:outline-none">
+                <button class="mobile-menu-toggle focus:outline-none" aria-label="Toggle mobile menu">
                     <span class="block w-6 h-0.5 bg-gray-700 mb-1 transition-all duration-300"></span>
                     <span class="block w-6 h-0.5 bg-gray-700 mb-1 transition-all duration-300"></span>
                     <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300"></span>
@@ -267,8 +269,8 @@ Your description text here starts cleanly on a new line below the image. Add par
         </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu hidden fixed inset-0 bg-[#6B46C1] text-white z-[9999] flex flex-col items-center justify-center p-8 md:hidden overflow-y-auto">
+    <!-- Mobile Menu – IMPORTANT: direct child of nav -->
+    <div class="mobile-menu hidden fixed inset-0 bg-[#6B46C1] text-white z-[9999] flex flex-col items-center pt-24 px-6 md:hidden overflow-y-auto">
         <div class="flex flex-col space-y-10 text-center w-full max-w-md">
             <a href="#home" class="text-2xl font-medium hover:text-[#D4AF37] transition-colors duration-200" data-lang="home">Home</a>
             <a href="loan-programs.html" class="text-2xl font-medium hover:text-[#D4AF37] transition-colors duration-200" data-lang="loan-programs">Loan Programs</a>
@@ -278,7 +280,7 @@ Your description text here starts cleanly on a new line below the image. Add par
             <a href="about.html" class="text-2xl font-medium hover:text-[#D4AF37] transition-colors duration-200" data-lang="about">About</a>
 
             <a href="apply.html" 
-               class="mt-10 bg-white text-purple-700 px-12 py-5 rounded-xl text-xl font-bold shadow-xl hover:bg-gray-50 hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+               class="mt-12 bg-white text-purple-700 px-12 py-5 rounded-xl text-xl font-bold shadow-2xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
                data-lang="apply">
                 Apply Now
             </a>
